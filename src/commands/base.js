@@ -252,7 +252,10 @@ class Command {
 		if(ownerOverride && this.client.isOwner(message.author)) return true;
 
 		if(this.ownerOnly && (ownerOverride || !this.client.isOwner(message.author))) {
-			return `The \`${this.name}\` command can only be used by the bot owner.`;
+			return message.embed({
+				color: 'RED',
+				description: `B-Bakaaa, \`${this.name}\` command only for bot owner.`
+			});
 		}
 
 		if(message.channel.type === 'text' && this.userPermissions) {
@@ -323,9 +326,8 @@ class Command {
 				`);
 			}
 			case 'throttling': {
-				return message.reply(
-					`You may not use the \`${this.name}\` command again for another ${data.remaining.toFixed(1)} seconds.`
-				);
+				// eslint-disable-next-line max-len
+				return message.embed({ color: 'RED', description: `No! You are in cooldown. \nUse \`${this.name}\` command again on ${data.remaining.toFixed(1)} seconds.` });
 			}
 			default:
 				return null;
@@ -350,11 +352,11 @@ class Command {
 		}).join(owners.length > 2 ? ', ' : ' ') : '';
 
 		const invite = this.client.options.invite;
-		return message.reply(stripIndents`
-			An error occurred while running the command: \`${err.name}: ${err.message}\`
-			You shouldn't ever receive an error like this.
-			Please contact ${ownerList || 'the bot owner'}${invite ? ` in this server: ${invite}` : '.'}
-		`);
+		return message.embed({ color: 'RED', description: stripIndents`
+			${message.author.username}, 😖 || An error occurred while running the command: \`${err.name}: ${err.message}\`
+			This developer fault :(
+			Contact ${ownerList || 'the bot owner'}${invite ? ` in this server: ${invite}` : '.'}
+		` });
 	}
 
 	/**

@@ -178,11 +178,12 @@ class Argument {
 			}
 
 			// Prompt the user for a new value
-			prompts.push(await msg.embed({ description: stripIndents`
-				${empty ? this.prompt : valid ? valid : `You provided an invalid ${this.label}. Please try again.`}
+			prompts.push(await msg.embed({ color: '#2F3136', description: stripIndents`
+				**${empty ? this.prompt : valid ? valid : `You provided an invalid ${this.label}. Please try again.`}**
+
 				${oneLine`
 					Type \`cancel\` to cancel the command.
-					${wait ? `The command will automatically be cancelled in ${this.wait} seconds.` : ''}
+					${wait ? `Im waiting on ${this.wait} seconds.` : ''}
 				`}
 			` }));
 
@@ -263,25 +264,27 @@ class Argument {
 				// Prompt the user for a new value
 				if(val) {
 					const escaped = escapeMarkdown(val).replace(/@/g, '@\u200b');
-					prompts.push(await msg.reply(stripIndents`
+					prompts.push(await msg.embed({ color: '#2F3136', description: stripIndents`
 						${valid ? valid : oneLine`
-							You provided an invalid ${this.label},
+							**You provided an invalid ${this.label},
 							"${escaped.length < 1850 ? escaped : '[too long to show]'}".
-							Please try again.
+							Please try again.**
 						`}
+
 						${oneLine`
-							Respond with \`cancel\` to cancel the command, or \`finish\` to finish entry up to this point.
-							${wait ? `The command will automatically be cancelled in ${this.wait} seconds.` : ''}
+							Type \`cancel\` to cancel the command, or \`finish\` to finish entry up to this point.
+							${wait ? `Im waiting on ${this.wait} seconds.` : ''}
 						`}
-					`));
+					` }));
 				} else if(results.length === 0) {
-					prompts.push(await msg.reply(stripIndents`
-						${this.prompt}
+					prompts.push(await msg.embed({ color: '#2F3136', description: stripIndents`
+						**${this.prompt}**
+
 						${oneLine`
 							Respond with \`cancel\` to cancel the command, or \`finish\` to finish entry.
 							${wait ? `The command will automatically be cancelled in ${this.wait} seconds, unless you respond.` : ''}
 						`}
-					`));
+					` }));
 				}
 
 				// Get the user's response
