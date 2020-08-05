@@ -178,13 +178,13 @@ class Argument {
 			}
 
 			// Prompt the user for a new value
-			prompts.push(await msg.reply(stripIndents`
+			prompts.push(await msg.embed({ description: stripIndents`
 				${empty ? this.prompt : valid ? valid : `You provided an invalid ${this.label}. Please try again.`}
 				${oneLine`
-					Respond with \`cancel\` to cancel the command.
+					Type \`cancel\` to cancel the command.
 					${wait ? `The command will automatically be cancelled in ${this.wait} seconds.` : ''}
 				`}
-			`));
+			` }));
 
 			// Get the user's response
 			const responses = await msg.channel.awaitMessages(msg2 => msg2.author.id === msg.author.id, {
