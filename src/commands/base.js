@@ -252,10 +252,7 @@ class Command {
 		if(ownerOverride && this.client.isOwner(message.author)) return true;
 
 		if(this.ownerOnly && (ownerOverride || !this.client.isOwner(message.author))) {
-			return message.embed({
-				color: 'RED',
-				description: `B-Bakaaa, \`${this.name}\` command only for bot owner.`
-			});
+			return `B-Bakaaa, \`${this.name}\` command only for bot owner.`;
 		}
 
 		if(message.channel.type === 'text' && this.userPermissions) {
