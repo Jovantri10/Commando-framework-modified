@@ -1,5 +1,6 @@
-const { oneLine } = require('common-tags');
+const { stripIndent } = require('common-tags');
 const Command = require('../base');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = class PingCommand extends Command {
 	constructor(client) {
@@ -9,20 +10,23 @@ module.exports = class PingCommand extends Command {
 			memberName: 'ping',
 			description: 'Checks the bot\'s ping to the Discord server.',
 			throttling: {
-				usages: 5,
+				usages: 2,
 				duration: 10
 			}
 		});
 	}
 
 	async run(msg) {
-		const pingMsg = await msg.reply('Pinging...');
-		return pingMsg.edit(oneLine`
-			${msg.channel.type !== 'dm' ? `${msg.author},` : ''}
-			Pong! The message round-trip took ${
-				(pingMsg.editedTimestamp || pingMsg.createdTimestamp) - (msg.editedTimestamp || msg.createdTimestamp)
-			}ms.
-			${this.client.ws.ping ? `The heartbeat ping is ${Math.round(this.client.ws.ping)}ms.` : ''}
-		`);
+		const pingMsg = await msg.say('Pinging...');
+		let embed = new MessageEmbed()
+		.setTitle(`${this.client.user.username} Latency!`)
+		.setColor('RAMDOM')
+		.setDescription(stripIndent`
+		🏓 Pong: ${(pingMsg.editedTimestamp || pingMsg.createdTimestamp) - (msg.editedTimestamp || msg.createdTimestamp)}ms.
+
+		${this.client.ws.ping ? `🌐 Api: ${Math.round(this.client.ws.ping)}ms.` : ''}`)
+		.setTimestamp()
+		.setFooter(`© ${this.client.user.username}`);
+		pingMsg.edit(' ', embed);
 	}
 };

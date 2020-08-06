@@ -10,7 +10,9 @@ module.exports = class ListGroupsCommand extends Command {
 			memberName: 'groups',
 			description: 'Lists all command groups.',
 			details: 'Only administrators may use this command.',
-			guarded: true
+			guarded: true,
+			ownerOnly: true,
+			hidden: true
 		});
 	}
 

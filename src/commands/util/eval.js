@@ -57,7 +57,10 @@ module.exports = class EvalCommand extends Command {
 			this.lastResult = eval(args.script);
 			hrDiff = process.hrtime(hrStart);
 		} catch(err) {
-			return msg.reply(`Error while evaluating: \`${err}\``);
+			return msg.embed({
+				color: 'RED',
+				description: `Upss... \`${err}\``
+			});
 		}
 
 		// Prepare for callback time and respond
@@ -73,7 +76,7 @@ module.exports = class EvalCommand extends Command {
 	makeResultMessages(result, hrDiff, input = null) {
 		const inspected = util.inspect(result, { depth: 0 })
 			.replace(nlPattern, '\n')
-			.replace(this.sensitivePattern, '--snip--');
+			.replace(this.sensitivePattern, 'B-Bakaaa!!!!');
 		const split = inspected.split('\n');
 		const last = inspected.length - 1;
 		const prependPart = inspected[0] !== '{' && inspected[0] !== '[' && inspected[0] !== "'" ? split[0] : inspected[0];
@@ -84,11 +87,12 @@ module.exports = class EvalCommand extends Command {
 		const append = `\n${appendPart}\n\`\`\``;
 		if(input) {
 			return discord.splitMessage(tags.stripIndents`
-				*Executed in ${hrDiff[0] > 0 ? `${hrDiff[0]}s ` : ''}${hrDiff[1] / 1000000}ms.*
+				*⏰: ${hrDiff[0] > 0 ? `${hrDiff[0]}s ` : ''}${hrDiff[1] / 1000000}ms.*
 				\`\`\`javascript
 				${inspected}
 				\`\`\`
-			`, { maxLength: 1900, prepend, append });
+			`, { maxLength: 1900, prepend, append })
+			.then(re => { re.react('✅'); });
 		} else {
 			return discord.splitMessage(tags.stripIndents`
 				*Callback executed after ${hrDiff[0] > 0 ? `${hrDiff[0]}s ` : ''}${hrDiff[1] / 1000000}ms.*
