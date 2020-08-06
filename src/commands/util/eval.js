@@ -11,6 +11,7 @@ module.exports = class EvalCommand extends Command {
 	constructor(client) {
 		super(client, {
 			name: 'eval',
+			aliases: ['e'],
 			group: 'util',
 			memberName: 'eval',
 			description: 'Executes JavaScript code.',
@@ -91,8 +92,7 @@ module.exports = class EvalCommand extends Command {
 				\`\`\`javascript
 				${inspected}
 				\`\`\`
-			`, { maxLength: 1900, prepend, append })
-			.then(re => { re.react('✅'); });
+			`, { maxLength: 1900, prepend, append });
 		} else {
 			return discord.splitMessage(tags.stripIndents`
 				*Callback executed after ${hrDiff[0] > 0 ? `${hrDiff[0]}s ` : ''}${hrDiff[1] / 1000000}ms.*

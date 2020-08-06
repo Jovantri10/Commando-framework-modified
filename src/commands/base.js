@@ -350,9 +350,10 @@ class Command {
 
 		const invite = this.client.options.invite;
 		return message.embed({ color: 'RED', description: stripIndents`
-			${message.author.username}, 😖 || An error occurred while running the command: \`${err.name}: ${err.message}\`
-			This developer fault :(
-			Contact ${ownerList || 'the bot owner'}${invite ? ` in this server: ${invite}` : '.'}
+			**${message.author.username}**, An error occurred while running the command: 
+			\`${err.name}: ${err.message}\`
+			This is developer fault :(
+			Please Contact ${ownerList || 'the bot owner'}${invite ? ` in this server: ${invite}` : '.'}
 		` });
 	}
 
