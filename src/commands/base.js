@@ -252,17 +252,18 @@ class Command {
 		if(ownerOverride && this.client.isOwner(message.author)) return true;
 
 		if(this.ownerOnly && (ownerOverride || !this.client.isOwner(message.author))) {
-			return `B-Bakaaa, \`${this.name}\` command only for bot owner.`;
+			return `B-Bakaaa, You are trying to run the \`${this.name}\` command, But Nope.....`;
 		}
 
 		if(message.channel.type === 'text' && this.userPermissions) {
 			const missing = message.channel.permissionsFor(message.author).missing(this.userPermissions);
 			if(missing.length > 0) {
 				if(missing.length === 1) {
-					return `The \`${this.name}\` command requires you to have the "${permissions[missing[0]]}" permission.`;
+					// eslint-disable-next-line max-len
+					return `Ahh Soryy,, \`${this.name}\` command, Require "${permissions[missing[0]]}" permission.`;
 				}
 				return oneLine`
-					The \`${this.name}\` command requires you to have the following permissions:
+					\`${this.name}\` command requires you to have the following permissions:
 					${missing.map(perm => permissions[perm]).join(', ')}
 				`;
 			}
@@ -304,17 +305,17 @@ class Command {
 	onBlock(message, reason, data) {
 		switch(reason) {
 			case 'guildOnly':
-				return message.reply(`The \`${this.name}\` command must be used in a server channel.`);
+				return message.reply(`\`${this.name}\` command must be used in a server.`);
 			case 'nsfw':
-				return message.reply(`The \`${this.name}\` command can only be used in NSFW channels.`);
+				return message.reply(`Ah,, Require NFSW channel to run \`${this.name}\` command.`);
 			case 'permission': {
 				if(data.response) return message.reply(data.response);
-				return message.reply(`You do not have permission to use the \`${this.name}\` command.`);
+				return message.reply(`Sorry, You do not have permission to use the \`${this.name}\` command.`);
 			}
 			case 'clientPermissions': {
 				if(data.missing.length === 1) {
 					return message.reply(
-						`I need the "${permissions[data.missing[0]]}" permission for the \`${this.name}\` command to work.`
+						`Ahh, I need the "${permissions[data.missing[0]]}" permission for the \`${this.name}\` command to work.`
 					);
 				}
 				return message.reply(oneLine`
@@ -347,14 +348,14 @@ class Command {
 			const or = i === owners.length - 1 && owners.length > 1 ? 'or ' : '';
 			return `${or}${escapeMarkdown(usr.username)}#${usr.discriminator}`;
 		}).join(owners.length > 2 ? ', ' : ' ') : '';
-
+		const a = Date.now();
 		const invite = this.client.options.invite;
-		return message.embed({ color: 'RED', description: stripIndents`
-			**${message.author.username}**, An error occurred while running the command: 
-			\`${err.name}: ${err.message}\`
+		return message.reply(stripIndents`**ERROR** ⏰: ${Date.now - a}
+			\`\`\`bash\nAn error occurred while running the command: 
+			${err.name}: ${err.message}
 			This is developer fault :(
-			Please Contact ${ownerList || 'the bot owner'}${invite ? ` in this server: ${invite}` : '.'}
-		` });
+			Please Contact ${ownerList || 'the bot owner'}${invite ? ` in this server: ${invite}` : '.'}\`\`\`
+		`);
 	}
 
 	/**
