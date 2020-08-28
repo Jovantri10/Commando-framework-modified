@@ -307,7 +307,7 @@ class Command {
 			case 'guildOnly':
 				return message.reply(`\`${this.name}\` command must be used in a server.`);
 			case 'nsfw':
-				return message.reply(`Ah,, Require NFSW channel to run \`${this.name}\` command.`);
+				return message.reply(`Ah,, Require NSFW channel to run \`${this.name}\` command.`);
 			case 'permission': {
 				if(data.response) return message.reply(data.response);
 				return message.reply(`Sorry, You do not have permission to use the \`${this.name}\` command.`);
@@ -348,13 +348,12 @@ class Command {
 			const or = i === owners.length - 1 && owners.length > 1 ? 'or ' : '';
 			return `${or}${escapeMarkdown(usr.username)}#${usr.discriminator}`;
 		}).join(owners.length > 2 ? ', ' : ' ') : '';
-		const a = Date.now();
 		const invite = this.client.options.invite;
-		return message.reply(stripIndents`**ERROR** ⏰: ${Date.now - a}
-			\`\`\`bash\nAn error occurred while running the command: 
-			${err.name}: ${err.message}
-			This is developer fault :(
-			Please Contact ${ownerList || 'the bot owner'}${invite ? ` in this server: ${invite}` : '.'}\`\`\`
+		return message.reply(stripIndents`**ERROR**
+		Upss, i got an error while running the command
+		**${err.name}: ${err.message}**
+		This is developer fault :(
+		Please Contact ${ownerList || 'the bot owner'}${invite ? ` in this server: ${invite}` : '.'}
 		`);
 	}
 
