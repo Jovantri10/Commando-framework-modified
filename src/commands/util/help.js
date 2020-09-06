@@ -31,7 +31,8 @@ module.exports = class HelpCommand extends Command {
 	async run(msg, { command }) {
 		if(!command) {
 			const embed = new MessageEmbed()
-			.setAuthor(this.client.user.username, this.client.user.avatarURL())
+			.setThumbnail(this.client.user.avatarURL())
+                        .setAuthor(this.client.user.username, this.client.user.avatarURL())
 			.setColor(0x2f3136);
 			let cmdCount = 0;
 			for(const group of this.client.registry.groups.values()) {
@@ -59,7 +60,7 @@ module.exports = class HelpCommand extends Command {
             .setDescription(stripIndents`
             > Description: ${command.description}${command.details ? `${command.details}` : ''}
             > Format: ${msg.anyUsage(`${command.name} ${command.format || ''}`)}
-            > Aliases: ${command.aliases.splice(0, 1) || 'None'}
+            > Aliases: ${command.aliases.join(', ')} || 'None'
             > Group: ${command.group.name} (\`${command.groupID}:${command.memberName}\`)
             > NSFW: ${command.nsfw ? 'Yes' : 'No'}`)
 			.setTimestamp();
