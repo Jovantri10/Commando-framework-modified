@@ -60,7 +60,6 @@ module.exports = class HelpCommand extends Command {
             .setDescription(stripIndents`
             • > Description: ${command.description}${command.details ? `${command.details}` : ''}
             • > Format: ${msg.anyUsage(`${command.name} ${command.format || ''}`)}
-          //  > Aliases: ${command.aliases.join(', ')} || 'None'
             • > Group: ${command.group.name} (\`${command.groupID}:${command.memberName}\`)
             • > NSFW: ${command.nsfw ? 'Yes' : 'No'}`)
 			.setTimestamp();
