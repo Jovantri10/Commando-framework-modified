@@ -8,7 +8,7 @@ module.exports = class HelpCommand extends Command {
 			name: 'help',
 			group: 'util',
 			memberName: 'help',
-			aliases: ['commands'],
+			aliases: ['commands','h'],
 			description: 'Displays a list of available commands, or detailed information for a specified command.',
 			details: oneLine`
 				The command may be part of a command name or a whole command name.
@@ -32,7 +32,7 @@ module.exports = class HelpCommand extends Command {
 		if(!command) {
 			const embed = new MessageEmbed()
 			.setAuthor(this.client.user.username, this.client.user.avatarURL())
-			.setColor('RANDOM');
+			.setColor(0x2f3136);
 			let cmdCount = 0;
 			for(const group of this.client.registry.groups.values()) {
 				const owner = this.client.isOwner(msg.author);
@@ -43,7 +43,7 @@ module.exports = class HelpCommand extends Command {
 				});
 				if(!commands.size) continue;
 				cmdCount += commands.size;
-				embed.addField(`》 ${group.name}`, commands.map(cmd => `\`${cmd.name}\``).join(', '));
+				embed.addField(`❤ ${group.name}`, commands.map(cmd => `\`${cmd.name}\``).join(', '));
 			}
 			if(cmdCount === this.client.registry.commands.size) {
 				embed.setFooter(`${this.client.registry.commands.size} Commands`);
