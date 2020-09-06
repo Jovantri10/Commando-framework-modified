@@ -21,7 +21,7 @@ module.exports = class PingCommand extends Command {
 		let embed = new MessageEmbed()
 		.setTitle(`${this.client.user.username} Latency!`)
 		.setColor(0x2f3136)
-                .setThumbnail(client.user.avatarURL())
+                .setThumbnail(this.client.user.avatarURL())
 		.setDescription(stripIndent`
 		🏓 Pong: ${(pingMsg.editedTimestamp || pingMsg.createdTimestamp) - (msg.editedTimestamp || msg.createdTimestamp)}ms.
 
