@@ -20,7 +20,7 @@ module.exports = class PingCommand extends Command {
 		const pingMsg = await msg.say('Pinging...');
 		let embed = new MessageEmbed()
 		.setTitle(`${this.client.user.username} Latency!`)
-		.setColor('RAMDOM')
+		.setColor(0x2f3136)
 		.setDescription(stripIndent`
 		🏓 Pong: ${(pingMsg.editedTimestamp || pingMsg.createdTimestamp) - (msg.editedTimestamp || msg.createdTimestamp)}ms.
 
