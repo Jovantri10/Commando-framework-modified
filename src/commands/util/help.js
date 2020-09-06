@@ -43,7 +43,7 @@ module.exports = class HelpCommand extends Command {
 				});
 				if(!commands.size) continue;
 				cmdCount += commands.size;
-				embed.addField(`❤ ${group.name}`, commands.map(cmd => `\`${cmd.name}\``).join(', '));
+				embed.addField(`• | ${group.name}`, commands.map(cmd => `\`${cmd.name}\``).join(', '));
 			}
 			if(cmdCount === this.client.registry.commands.size) {
 				embed.setFooter(`${this.client.registry.commands.size} Commands`);
@@ -54,7 +54,7 @@ module.exports = class HelpCommand extends Command {
 		}
 		const embad = new MessageEmbed()
             .setTitle(`Command **${command.name}** ${command.guildOnly ? '  (Usable only in servers)' : ''}`)
-            .setColor(this.client.config.color)
+            .setColor(0x2f3136)
             .setFooter(msg.author.tag, msg.author.displayAvatarURL())
             .setDescription(stripIndents`
             > Description: ${command.description}${command.details ? `${command.details}` : ''}
