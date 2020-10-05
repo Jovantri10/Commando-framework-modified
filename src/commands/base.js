@@ -252,7 +252,7 @@ class Command {
 		if(ownerOverride && this.client.isOwner(message.author)) return true;
 
 		if(this.ownerOnly && (ownerOverride || !this.client.isOwner(message.author))) {
-			return `B-Bakaaa, You are trying to run the \`${this.name}\` command, But Nope.....`;
+			return `B-Bakaaa, You are trying to run the \`${this.name}\` command! The commands **JUST FOR MY OWNER***! Dont try it!`;
 		}
 
 		if(message.channel.type === 'text' && this.userPermissions) {
